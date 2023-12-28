@@ -1,0 +1,15 @@
+{
+  "name": "interview-assessment",
+  "version": "1.0.0",
+  "description": "Describe app and fix a unit test",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd assessment && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@angular/cli": "^17.0.7"
+  }
+}
