@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd assessment && npm start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd assessment && npm run coverage"
   },
   "author": "",
   "license": "UNLICENSED",
