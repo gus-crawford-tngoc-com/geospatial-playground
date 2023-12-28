@@ -113,7 +113,8 @@ export class SearchZipsService {
         this.zips.next(results);
       }
     ).catch(err=>{
-      console.warn(err);
+      console.debug(err);
+      this.zips.error(err);
       return undefined;
     }) as any;
   }
