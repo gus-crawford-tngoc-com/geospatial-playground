@@ -89,26 +89,16 @@ export class SearchZipsService {
    * - Returns **plain/text** mime
    * - (a streamable I suppose) `\n` separated JSON-format of zip codes (as would load into a mongodb)
    */
-  refreshZipCodes() {
+  refreshZipCodes(
+    /** search expresssion */
+    exp:string
+  ) {
     if (this.loading) {
       return this.loading;
     }
-    return this.loading = this.http.get('https://media.mongodb.org/zips.json', {responseType: 'text'}).toPromise().then(
+    return this.loading = this.http.get('/api/zips?text=exp').toPromise().then(
       zipCodes=>{
-        const results:ZipCode[] = [];
-        (zipCodes??'').split('\n').forEach(
-          zip=>{
-            try {
-              if (zip) {
-                results.push(JSON.parse(zip));
-              }
-            } catch (e) {
-              console.warn(e);
-              this.loading = undefined;
-            }
-            return results;
-          }
-        );
+        const results:ZipCode[] = zipCodes as any;
         this.loading = undefined;
         this.zips.next(results);
       }

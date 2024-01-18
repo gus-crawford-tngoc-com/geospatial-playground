@@ -32,7 +32,7 @@ export class SearchZipCodesComponent implements OnInit,OnDestroy {
   async search(subject:string) {
     const [expression, state] = (subject??'').split(/\s*,\s*/g);
     this.searchFilter = {expression, state};
-    this.zipSearch.refreshZipCodes();
+    this.zipSearch.refreshZipCodes(expression);
   }
 
   ngOnDestroy(): void {
