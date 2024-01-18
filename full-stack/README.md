@@ -1,3 +1,10 @@
+# Backend Assessment
+
+1. Consider running this service as a replica...  what would you change if you wanted to horizontally scale this code?
+2. Write an end-to-end test for the "search" method inherited by the `ZipCodesService`.
+
+----
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>

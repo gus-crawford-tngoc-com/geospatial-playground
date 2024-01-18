@@ -96,7 +96,7 @@ export class SearchZipsService {
     if (this.loading) {
       return this.loading;
     }
-    return this.loading = this.http.get('/api/zips?text=exp').toPromise().then(
+    return this.loading = this.http.get(`/api/zips?text=${exp}`).toPromise().then(
       zipCodes=>{
         const results:ZipCode[] = zipCodes as any;
         this.loading = undefined;
