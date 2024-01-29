@@ -15,13 +15,6 @@ services:
       - './mongo/scripts:/data/scripts'
     command:
       - '/data/scripts/setup.sh'
-  redis:
-    container_name: cache
-    image: redis
-    ports:
-      - 6379:6379
-    volumes:
-      - redis:/data
 networks:
   default:
     driver: bridge

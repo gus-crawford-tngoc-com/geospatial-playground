@@ -1,3 +1,7 @@
+<div class="visual-plotter">
+    <img #mapView class="map-view" src="assets\projected-world-map.jpg" alt="">
+    <canvas #plotter></canvas>
+</div>
 <hr>
 <input #searchField placeholder="Enter ZIP or city... (, state)"> <button (click)="search(searchField.value);">🔎</button>
 <table *ngIf="results">

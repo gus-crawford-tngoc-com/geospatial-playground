@@ -25,6 +25,7 @@ export class AppController {
     @Query('lat')
     lat: string,
   ): Promise<ZipCode[]> {
+    console.log('🚩');
     return this.zips.near(
       parseInt(radius, 10),
       [parseInt(long, 10), parseInt(lat, 10)],
