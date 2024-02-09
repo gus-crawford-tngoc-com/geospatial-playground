@@ -32,8 +32,7 @@ export class SearchZipCodesComponent implements OnInit,OnDestroy {
               height: this.mapView?.nativeElement.height,
             }
           };
-          console.info(atlas);
-          this.plotter?.nativeElement.getContext("2d").clearRect(0, 0, atlas.width, atlas.height);
+          this.clear();
           zips.forEach(
             (zip,n)=>n?zip:this.plot(zip.loc)
           );
@@ -59,7 +58,7 @@ export class SearchZipCodesComponent implements OnInit,OnDestroy {
    * 1. Transform coords to 0 x 0 top-left origin plane
    * 2. Transform coords to scale
    */
-  transformPoint(
+  transformLongLatToPoint(
     /** logitude and lattitude (+/-180, +/-90) */
     [long, lat]:number[],
     /** (optional) the width and height of the "atlas projection image" being drawn on */
@@ -67,30 +66,60 @@ export class SearchZipCodesComponent implements OnInit,OnDestroy {
       this.mapView?.nativeElement.clientWidth,
       this.mapView?.nativeElement.clientHeight
     ]) {
-      const full = 360, semi = full / 2, hemi = semi / 2;
-      const conventionalOrigin= {
-        x: long + semi,
-        y: hemi - lat
-      };
+      const full = 360, /** 180 */ semi = full / 2, hemi = semi / 2;
       const scale = {
         x: width / full,
         y: height / semi
       };
+      const conventionalOrigin= {
+        x: semi + long,
+        y: semi - (hemi + lat)
+      };
       return [
-        conventionalOrigin.x * scale.x,
-        conventionalOrigin.y * scale.y
+      (conventionalOrigin.x * scale.x),
+       (conventionalOrigin.y * scale.y)
       ]
   }
-  plot([long, lat]:number[]) {
+  transformPointToLongLat(
+    /** logitude and lattitude (+/-180, +/-90) */
+    [x, y]:number[],
+    /** (optional) the width and height of the "atlas projection image" being drawn on */
+    [width, height]:number[]=[
+      this.mapView?.nativeElement.clientWidth,
+      this.mapView?.nativeElement.clientHeight
+    ]) {
+      const full = 360, /** 180 */ semi = full / 2, hemi = semi / 2;
+      const scale = {
+        x: width / full,
+        y: height / semi
+      };
+      const descaled = {
+        x: x / scale.x,
+        y: y / scale.y
+      };
+      return [
+        descaled.x - semi,
+        semi + (descaled.y - hemi)
+      ];
+  }
+
+  clear() {
+    (this.plotter as any).nativeElement.innerHTML = '';
+  }
+  plot([long, lat]:number[], offset=[0,-22]) {
     const canvas = this.plotter?.nativeElement;
-    if (canvas.getContext) {
-      const ctx = canvas.getContext("2d");
-  
-      // ctx.fillRect(25, 25, 100, 100);
-      // ctx.clearRect(45, 45, 60, 60);
-      ctx.fillStyle = 'white';
-      const [x, y] = this.transformPoint([long, lat])
-      ctx.strokeRect(x, y, 5, 5);
+    if (canvas) {
+      const [x, y] = this.transformLongLatToPoint([long, lat]);
+      const pin = document.createElement('div');
+      pin.innerText = '📌';
+      pin.style.position = 'absolute';
+      pin.style.top = (y+offset[1])+'px';
+      pin.style.left = (x+offset[0])+'px';
+      canvas.appendChild(pin);
     }
+  }
+  isolate(zip:ZipCode) {
+    this.clear();
+    this.plot(zip.loc);
   }
 }

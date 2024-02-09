@@ -4,8 +4,9 @@
   "description": "Describe app and fix a unit test",
   "main": "index.js",
   "scripts": {
-    "start": "cd assessment && npm start",
-    "test": "cd assessment && npm run coverage"
+    "prestart": "npm i",
+    "start": "docker compose up -d && cd web && npm start",
+    "test": "cd web && npm run coverage"
   },
   "author": "",
   "license": "UNLICENSED",

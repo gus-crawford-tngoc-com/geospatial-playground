@@ -8,6 +8,8 @@ services:
       - '27017:27017'
     volumes:
       - './mongo/db:/data/db'
+    networks:
+      - back-end
       
   mongo-setup:
     image: 'mongo'
@@ -15,6 +17,28 @@ services:
       - './mongo/scripts:/data/scripts'
     command:
       - '/data/scripts/setup.sh'
+    networks:
+      - back-end
+
+  back-end:
+    container_name: back-end
+    build:
+      target: develop
+      context: './service'
+    command: 'npm run start:dev'
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+    networks:
+      - back-end
+    volumes:
+      - './service/package.json:/app/package.json:ro'
+      - './service/tsconfig.json:/app/tsconfig.json:ro'
+      - './service/tsconfig.build.json:/app/tsconfig.build.json:ro'
+      - './service/src:/app/src'
+
 networks:
-  default:
+  back-end:
+    name: back-end
     driver: bridge

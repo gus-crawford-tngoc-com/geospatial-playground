@@ -1,4 +1,5 @@
-export const MONGO_URI = 'mongodb://127.0.0.1:27017';
+
+export const MONGO_URI = process.env.MONGO_URI || `mongodb://127.0.0.1:27017`;
 export const MONGO_DB = 'test';
 /* eslint-disable prettier/prettier */
 import { Collection, MongoClient, Db, Filter } from 'mongodb';

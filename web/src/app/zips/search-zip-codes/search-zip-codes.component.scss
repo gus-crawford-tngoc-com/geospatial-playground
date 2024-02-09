@@ -1,0 +1,35 @@
+.floating-ui {
+    font-family: Arial, Helvetica, sans-serif;
+    position:absolute;
+    top: 50px;
+    right: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    min-height: 300px;
+    min-width: 450px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px #333;
+}
+.visual-plotter {
+    position: relative;
+    #plotter {
+        position: absolute;
+        top: 0px; left: 0px;
+        bottom: 0px; right: 0px
+    }
+    .map-view {
+        width:100%;
+        height: auto;
+        opacity: 0.5;
+    } 
+}
+table {
+    tr:hover {
+        cursor: pointer;
+        background-color: rgba(1,1,1,0.2);
+    }
+    
+}
